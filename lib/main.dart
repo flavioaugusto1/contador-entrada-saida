@@ -15,15 +15,27 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int count = 0;
+
   void decrement() {
-    print("Decrement");
+    setState(() {
+      count--;
+    });
   }
 
   void increment() {
-    print("Increment");
+    setState(() {
+      count++;
+      print(count);
+    });
   }
 
   @override
@@ -47,11 +59,11 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(40),
+            Padding(
+              padding: const EdgeInsets.all(40),
               child: Text(
-                '0',
-                style: TextStyle(
+                '$count',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 100,
                 ),
