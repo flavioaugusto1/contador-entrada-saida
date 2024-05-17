@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: HomePage(),
     );
   }
 }
@@ -34,9 +34,11 @@ class _HomePageState extends State<HomePage> {
   void increment() {
     setState(() {
       count++;
-      print(count);
     });
   }
+
+  bool get isEmpty => count == 0;
+  bool get isFull => count == 20;
 
   @override
   Widget build(BuildContext context) {
@@ -51,20 +53,20 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Pode entrar!",
+            Text(
+              isFull ? "Lotado" : "Pode entrar!",
               style: TextStyle(
-                fontSize: 30,
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
+                fontSize: 36,
+                color: isFull ? Colors.red : Colors.white,
+                fontWeight: FontWeight.w900,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(40),
               child: Text(
-                '$count',
-                style: const TextStyle(
-                  color: Colors.white,
+                count.toString(),
+                style: TextStyle(
+                  color: isFull ? Colors.red : Colors.white,
                   fontSize: 100,
                 ),
               ),
@@ -73,9 +75,10 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: decrement,
+                  onPressed: isEmpty ? null : decrement,
                   style: TextButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor:
+                        isEmpty ? Colors.white.withOpacity(0.2) : Colors.white,
                     fixedSize: const Size(100, 100),
                     foregroundColor: Colors.black,
                     shape: const RoundedRectangleBorder(
@@ -96,9 +99,10 @@ class _HomePageState extends State<HomePage> {
                   width: 30,
                 ),
                 TextButton(
-                  onPressed: increment,
+                  onPressed: isFull ? null : increment,
                   style: TextButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor:
+                        isFull ? Colors.white.withOpacity(0.2) : Colors.white,
                     fixedSize: const Size(100, 100),
                     foregroundColor: Colors.black,
                     shape: const RoundedRectangleBorder(
